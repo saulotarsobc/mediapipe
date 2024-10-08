@@ -1,0 +1,75 @@
+<!-- Copyright 2023 The MediaPipe Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+<!doctype html>
+<html>
+<head>
+  <!-- <base href="/"> -->
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>UFO Shooting</title>
+
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js" integrity="sha512-f8mwTB+Bs8a5c46DEm7HQLcJuHMBaH/UFlcgyetMqqkvTcYg4g5VXsYR71b3qC82lZytjNYvBj2pf0VekA9/FQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+  <canvas class="game-canvas" id="game-canvas"></canvas>
+  <div class="camera">
+    <div class="output-wrapper">
+      <video autoplay class="input-video" id="input-video"></video>
+      <canvas class="output-canvas" id="output-canvas" width="720px" height="480px"></canvas>
+    </div>
+    <form class="form-controller">
+      <div class="form-group">
+        <label class="form-label">Movement scale ratio: <strong class="slider-movement-scale-value">3</strong></label>
+        <div class="flex-space-between">
+          <span>1</span>
+          <span>10</span>
+        </div>
+        <div class="mdc-slider mdc-slider--discrete slider-movement-scale">
+          <input class="mdc-slider__input" type="range" min="1" max="10" value="3" name="volume" step="1" aria-label="Movement scale slider">
+          <div class="mdc-slider__track">
+            <div class="mdc-slider__track--inactive"></div>
+            <div class="mdc-slider__track--active">
+              <div class="mdc-slider__track--active_fill"></div>
+            </div>
+          </div>
+          <div class="mdc-slider__thumb">
+            <div class="mdc-slider__value-indicator-container" aria-hidden="true">
+              <div class="mdc-slider__value-indicator">
+                <span class="mdc-slider__value-indicator-text">
+                  3
+                </span>
+              </div>
+            </div>
+            <div class="mdc-slider__thumb-knob"></div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="score-dialog">
+    <p class="score-point">0</p>
+    <p class="score-label">Points</p>
+    <p class="score-label" style="margin-top: 16px;">Try to blast down as many UFOs as you can.</p>
+    <p class="score-label" style="margin-top: 16px;"><b>Move your head</b> to aim the green dot at the object you want to target and <b>open your mouth</b> to start firing.</p>
+    <p class="score-label" style="margin-top: 16px;">Make sure to give permission to enable your camera.</p>
+    <div class="dialog-actions">
+      <button class="start-btn">Start game</button>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!-- Copyright 2023 The MediaPipe Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
+<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <h1>Measure text similarity using the MediaPipe Text Embedder task</h1>
+    <section id="demos" class="invisible">
+      <h2>This demo calculates the embedding of the two piece of input text and measure their topic similarity.</h2>
+      <p>Cosine similarity ranges from -1 to 1, with a higher number meaning the two texts' topics are more similar.</p>
+      <p><em>Note: Two sentence of the same topic but with opposite meaning will have high similarity score, while two sentence of unrelated topics will have low similarity score.</em></p>
+      <p>Add text to the input fields, and then press <b>Calculate</b> to measure similarity.</p>
+      
+      <div style="display: block;">
+<label id="textField1" class="mdc-text-field mdc-text-field--filled mdc-text-field--textarea mdc-text-field--no-label">
+  <span class="mdc-text-field__ripple"></span>
+  <span class="mdc-text-field__resizer">
+
+    <textarea id="textInput1" class="mdc-text-field__input" rows="8" cols="40" aria-label="Text Input" placeholder="Enter text here"></textarea>
+  </span>
+  <span class="mdc-line-ripple"></span>
+</label>
+<label id="textField2" class="mdc-text-field mdc-text-field--filled mdc-text-field--textarea mdc-text-field--no-label">
+  <span class="mdc-text-field__ripple"></span>
+  <span class="mdc-text-field__resizer">
+
+    <textarea id="textInput2" class="mdc-text-field__input" rows="8" cols="40" aria-label="Text Input" placeholder="Enter text to compare here"></textarea>
+  </span>
+  <span class="mdc-line-ripple"></span>
+</label></br>
+      </div>
+
+
+<button id="calculate" class="mdc-button mdc-button--raised">
+  <span class="mdc-button__label">CALCULATE</span>
+</button></br>
+<p><b>Similarity:</b></p>
+      <p id="result"></p>
+    </section>
+    
