@@ -12,9 +12,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
+/* Copyright 2022 The MediaPipe Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 @use "@material";
 body {
-  font-family: roboto;
+  font-family: helvetica, arial, sans-serif;
   margin: 2em;
   color: #3d3d3d;
   --mdc-theme-primary: #007f8b;
@@ -22,6 +36,8 @@ body {
 }
 
 h1 {
+  font-style: italic;
+  color: #ff6f00;
   color: #007f8b;
 }
 
@@ -65,7 +81,8 @@ footer {
 }
 
 .videoView,
-.detectOnClick {
+.detectOnClick,
+.blend-shapes {
   position: relative;
   float: left;
   width: 48%;
@@ -110,4 +127,25 @@ footer {
 
 .detectOnClick img {
   width: 100%;
+}
+
+.blend-shapes-item {
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+
+.blend-shapes-label {
+  display: flex;
+  width: 120px;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 4px;
+}
+
+.blend-shapes-value {
+  display: flex;
+  height: 16px;
+  align-items: center;
+  background-color: #007f8b;
 }
