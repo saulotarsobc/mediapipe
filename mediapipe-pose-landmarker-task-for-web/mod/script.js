@@ -26,31 +26,30 @@ const canvasCtx = canvasElement.getContext("2d");
 const drawingUtils = new DrawingUtils(canvasCtx);
 
 // Check if webcam access is supported.
-const hasGetUserMedia = () => { var _a; return !!((_a = navigator.mediaDevices) === null || _a === void 0 ? void 0 : _a.getUserMedia); };
+const hasGetUserMedia = () => {
+    var _a;
+    return !!((_a = navigator.mediaDevices) === null || _a === void 0 ? void 0 : _a.getUserMedia);
+};
 
-// If webcam supported, add event listener to button for when user
-// wants to activate it.
+// If webcam supported, add event listener to button for when user wants to activate it.
 if (hasGetUserMedia()) {
     enableWebcamButton = document.getElementById("webcamButton");
     enableWebcamButton.addEventListener("click", enableCam);
-}
-else {
+} else {
     console.warn("getUserMedia() is not supported by your browser");
 }
 
 // Enable the live webcam view and start detection.
 function enableCam(event) {
     if (!poseLandmarker) {
-        console.log("Wait! poseLandmaker not loaded yet.");
+        console.log("Wait! poseLandmarker not loaded yet.");
         return;
     }
 
     if (webcamRunning === true) {
         webcamRunning = false;
         enableWebcamButton.innerText = "ENABLE PREDICTIONS";
-    }
-
-    else {
+    } else {
         webcamRunning = true;
         enableWebcamButton.innerText = "DISABLE PREDICTIONS";
     }
@@ -86,14 +85,52 @@ async function predictWebcam() {
     if (lastVideoTime !== video.currentTime) {
         lastVideoTime = video.currentTime;
         poseLandmarker.detectForVideo(video, startTimeMs, (result) => {
+            console.log(result); // Verifica a estrutura do resultado
+
             canvasCtx.save();
             canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-            for (const landmark of result.landmarks) {
-                drawingUtils.drawLandmarks(landmark, {
-                    radius: (data) => DrawingUtils.lerp(data.from.z, -0.15, 0.1, 5, 1)
-                });
-                drawingUtils.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
+
+            // Desenhar um retângulo verde com opacidade no meio do canvas
+            const rectWidth = 550;  // Largura do retângulo
+            const rectHeight = 300; // Altura do retângulo
+            const rectX = (canvasElement.width - rectWidth) / 2; // Posição X do retângulo
+            const rectY = (canvasElement.height - rectHeight) / 5; // Posição Y do retângulo
+
+            canvasCtx.fillStyle = "rgba(0, 255, 0, 0.3)"; // Verde com 30% de opacidade
+            canvasCtx.fillRect(rectX, rectY, rectWidth, rectHeight);
+
+            if (result.landmarks && result.landmarks.length > 0) { // Verifica se há landmarks
+                for (const landmark of result.landmarks) {
+                    drawingUtils.drawLandmarks(landmark, {
+                        radius: (data) => DrawingUtils.lerp(data.from.z, -0.15, 0.1, 5, 1)
+                    });
+                    drawingUtils.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
+
+                    // Obtendo a posição do nariz
+                    if (landmark.landmark && landmark.landmark.length > PoseLandmarker.POSE_LANDMARKS.NOSE) {
+                        const nose = landmark.landmark[PoseLandmarker.POSE_LANDMARKS.NOSE];
+
+                        if (nose) { // Verifica se o nariz foi detectado
+                            console.log(`Nose position: x=${nose.x}, y=${nose.y}`);
+
+                            // Desenhar um círculo branco com opacidade ao redor do nariz
+                            const radius = 20; // Raio do círculo
+                            canvasCtx.beginPath();
+                            canvasCtx.arc(nose.x * canvasElement.width, nose.y * canvasElement.height, radius, 0, 2 * Math.PI);
+                            canvasCtx.fillStyle = "rgba(255, 255, 255, 0.5)"; // Branco com 50% de opacidade
+                            canvasCtx.fill();
+                            canvasCtx.closePath();
+                        } else {
+                            console.warn("Nose landmark is not defined.");
+                        }
+                    } else {
+                        console.warn("Landmarks are not defined or too few landmarks returned.");
+                    }
+                }
+            } else {
+                console.warn("No landmarks detected.");
             }
+
             canvasCtx.restore();
         });
     }
